@@ -21,11 +21,11 @@ func getSecretWord(fileName string) string {
 
 	for scanner.Scan() {
 		word := scanner.Text()
-		if word == strings.ToLower(word) {
+		if word == strings.ToLower(word) && len(word) >= 6 {
 			allowedWords = append(allowedWords, word)
 		}
 	}
-	randomNum := rand.Intn(len(allowedWords) - 1)
+	randomNum := rand.Intn(len(allowedWords))
 	return allowedWords[randomNum]
 }
 
