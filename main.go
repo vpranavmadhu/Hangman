@@ -8,6 +8,15 @@ import (
 	"strings"
 )
 
+func containsPunctuation(s string) bool {
+	for _, ch := range s {
+		if ch < 'a' || ch > 'z' {
+			return true
+		}
+	}
+	return false
+}
+
 func getSecretWord(fileName string) string {
 
 	var allowedWords []string
@@ -21,7 +30,7 @@ func getSecretWord(fileName string) string {
 
 	for scanner.Scan() {
 		word := scanner.Text()
-		if word == strings.ToLower(word) && len(word) >= 6 {
+		if word == strings.ToLower(word) && len(word) >= 6 && !containsPunctuation(word) {
 			allowedWords = append(allowedWords, word)
 		}
 	}
