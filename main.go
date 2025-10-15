@@ -5,26 +5,28 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"strings"
 )
 
 func getSecretWord(fileName string) string {
+
+	var allowedWords []string
+
 	file, err := os.Open(fileName)
 	if err != nil {
-		panic(fmt.Sprintf("Error in %v cause of %v", file, err))
+		panic(fmt.Sprintf("Error in %v cause of %v", fileName, err))
 	}
 	defer file.Close()
-
 	scanner := bufio.NewScanner(file)
-	var wordList []string
+
 	for scanner.Scan() {
-		wordList = append(wordList, scanner.Text())
+		word := scanner.Text()
+		if word == strings.ToLower(word) {
+			allowedWords = append(allowedWords, word)
+		}
 	}
-	randomNumber := rand.Intn(len(wordList))
-	fmt.Println("random number:", randomNumber)
-
-	randomWord := wordList[randomNumber]
-
-	return randomWord
+	randomNum := rand.Intn(len(allowedWords) - 1)
+	return allowedWords[randomNum]
 }
 
 func main() {
