@@ -8,6 +8,23 @@ import (
 	"strings"
 )
 
+type Hangman struct {
+	secretWord       string
+	guesses          []byte
+	correctGuesses   []byte
+	remainingChances uint
+}
+
+func newGame(secretWord string) Hangman {
+
+	return Hangman{
+		secretWord:       secretWord,
+		guesses:          []byte{},
+		correctGuesses:   []byte{},
+		remainingChances: 7,
+	}
+}
+
 func containsPunctuation(s string) bool {
 	for _, ch := range s {
 		if ch < 'a' || ch > 'z' {
