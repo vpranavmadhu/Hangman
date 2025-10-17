@@ -120,3 +120,75 @@ func TestCorrectGuess2(t *testing.T) {
 		t.Errorf("Remaining chances is modified")
 	}
 }
+
+func TestRepeatGuess(t *testing.T) {
+	secretWord := "soldier"
+	guess := 'a'
+	currentState := Hangman{
+		secretWord:       secretWord,
+		guesses:          []byte{'a'},
+		correctGuesses:   []byte{},
+		remainingChances: 6,
+	}
+
+	newState := checkGuess(currentState, byte(guess))
+
+	expected := Hangman{
+		secretWord:       secretWord,
+		guesses:          []byte{'a'},
+		correctGuesses:   []byte{},
+		remainingChances: 6,
+	}
+
+	if newState.secretWord != expected.secretWord {
+		t.Errorf("Secret word is modified")
+	}
+	if !bytes.Equal(newState.guesses, expected.guesses) {
+		t.Errorf("Guess should be %q but got %q", expected.guesses, newState.guesses)
+	}
+
+	if !bytes.Equal(newState.correctGuesses, expected.correctGuesses) {
+		t.Errorf("Correct Guess should be %q but got %q", expected.correctGuesses, newState.correctGuesses)
+	}
+
+	if !(newState.remainingChances == expected.remainingChances) {
+		t.Errorf("Remaining chances is modified")
+	}
+
+}
+
+func TestRepeatGuess2(t *testing.T) {
+	secretWord := "soldier"
+	guess := 's'
+	currentState := Hangman{
+		secretWord:       secretWord,
+		guesses:          []byte{'a', 'b', 's'},
+		correctGuesses:   []byte{'s'},
+		remainingChances: 5,
+	}
+
+	newState := checkGuess(currentState, byte(guess))
+
+	expected := Hangman{
+		secretWord:       secretWord,
+		guesses:          []byte{'a', 'b', 's'},
+		correctGuesses:   []byte{'s'},
+		remainingChances: 5,
+	}
+
+	if newState.secretWord != expected.secretWord {
+		t.Errorf("Secret word is modified")
+	}
+	if !bytes.Equal(newState.guesses, expected.guesses) {
+		t.Errorf("Guess should be %q but got %q", expected.guesses, newState.guesses)
+	}
+
+	if !bytes.Equal(newState.correctGuesses, expected.correctGuesses) {
+		t.Errorf("Correct Guess should be %q but got %q", expected.correctGuesses, newState.correctGuesses)
+	}
+
+	if !(newState.remainingChances == expected.remainingChances) {
+		t.Errorf("Remaining chances is modified")
+	}
+
+}
