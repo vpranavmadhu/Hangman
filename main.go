@@ -86,7 +86,17 @@ func isGameOver(state Hangman) bool {
 }
 
 func hasWon(state Hangman) bool {
-	return false
+	corretcLetters := make(map[byte]bool)
+	for i := 0; i < len(state.secretWord); i++ {
+		corretcLetters[state.secretWord[i]] = true
+	}
+
+	for letter := range corretcLetters {
+		if !bytes.Contains(state.correctGuesses, []byte{letter}) {
+			return false
+		}
+	}
+	return true
 
 }
 
