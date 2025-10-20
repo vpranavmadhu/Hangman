@@ -262,3 +262,21 @@ func TestWrongGuess2(t *testing.T) {
 		t.Errorf("Remaining chances is modified")
 	}
 }
+
+func TestGameEndsLastGuessWrong(t *testing.T) {
+	secretWord := "cat"
+	guess := 'o'
+	currentState := Hangman{
+		secretWord:       secretWord,
+		guesses:          []byte{'x', 'y', 'z', 'w', 'u', 'v', 'r'},
+		correctGuesses:   []byte{},
+		remainingChances: 0,
+	}
+
+	newState := checkGuess(currentState, byte(guess))
+
+	if !isGameOver(newState) {
+		t.Errorf("Game is suppose end, but got state: %+v", newState)
+	}
+
+}
