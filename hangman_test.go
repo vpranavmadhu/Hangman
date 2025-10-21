@@ -314,3 +314,18 @@ func TestGameEndsAllCorrectGuess(t *testing.T) {
 		t.Errorf("Game is suppose end, but got Game over status: %v", isGameOver(newState))
 	}
 }
+
+func TestDisplaySecretWord(t *testing.T) {
+	currentState := Hangman{
+		secretWord:       "police",
+		guesses:          []byte{'x', 'z', 'a', 'p', 'l'},
+		correctGuesses:   []byte{'p', 'l'},
+		remainingChances: 4,
+	}
+	expectedDisplay := "p-l---"
+	actualDisplay := displaySecretWord(currentState)
+
+	if expectedDisplay != actualDisplay {
+		t.Errorf("Expected %s but got %s!\n", expectedDisplay, actualDisplay)
+	}
+}
