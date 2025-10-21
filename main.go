@@ -86,12 +86,12 @@ func isGameOver(state Hangman) bool {
 }
 
 func hasWon(state Hangman) bool {
-	corretcLetters := make(map[byte]bool)
+	correctLetters := make(map[byte]bool)
 	for i := 0; i < len(state.secretWord); i++ {
-		corretcLetters[state.secretWord[i]] = true
+		correctLetters[state.secretWord[i]] = true
 	}
 
-	for letter := range corretcLetters {
+	for letter := range correctLetters {
 		if !bytes.Contains(state.correctGuesses, []byte{letter}) {
 			return false
 		}
@@ -105,6 +105,11 @@ func getUserInput() byte {
 	reader := bufio.NewReader(os.Stdin)
 	char, _ := reader.ReadByte()
 	reader.ReadByte()
+
+	if char >= 'A' && char <= 'Z' {
+		char = char + 32
+	}
+
 	return char
 }
 
@@ -140,6 +145,12 @@ func main() {
 		fmt.Println("Remaining Chances:", game.remainingChances)
 		fmt.Println("Guesses: ", string(game.guesses))
 		guess := getUserInput()
+
+		if guess < 'a' || guess > 'z' {
+			fmt.Println("Please enter a valid character....!!!")
+			fmt.Println()
+			continue
+		}
 		game = checkGuess(game, guess)
 
 		if isGameOver(game) {
@@ -149,6 +160,7 @@ func main() {
 				fmt.Println("Sorry!! You loose. the word is:", secretWord)
 			}
 		}
+		fmt.Println()
 
 	}
 
